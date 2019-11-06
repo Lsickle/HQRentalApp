@@ -18,6 +18,9 @@ class CreateDataTable extends Migration
             $table->string('title' ,32);
             $table->text('description', 65535);
             $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 
