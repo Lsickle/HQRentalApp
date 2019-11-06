@@ -19,3 +19,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/data', 'DataController')->middleware('auth');
+Route::get('/sendNew/{data}', 'DataController@sendNewItemNotification')->name('sendNew');
+Route::get('sendUpdate', 'DataController@sendUpdateItemNotification')->name('sendUpdate');

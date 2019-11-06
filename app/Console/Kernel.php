@@ -24,8 +24,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('inspire')->hourly();
+        $schedule->command('command:SendReport 2 --queue==default')
+        ->everyFiveMinutes();
+        // ->runInBackground()
+        // ->withoutOverlapping(5)
+        // ->onOneServer()
+        // ->emailOutputTo('luisdelahoz0@gmail.com');
     }
 
     /**

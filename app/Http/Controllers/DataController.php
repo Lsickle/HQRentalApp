@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use App\Data;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreDataRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Notification;
+use App\Notifications\NewItem;
+use App\Notifications\UpdatedItem;
+use App\Notifications\HourlyReport;
+
 
 class DataController extends Controller
 {
@@ -42,7 +49,20 @@ class DataController extends Controller
         $data->description = $request->input('description');
         $data->save();
 
+        $user = Auth::user();
+        $details = [
+            'greeting' => 'Hi '.Auth::user()->name,
+            'body' => 'Yout Item '.$data->title.' has been created Successfully',
+            'thanks' => 'Thank you for using HQRentalApp!',
+            'actionText' => 'View Item',
+            'actionURL' => url('/data/'.$data->id),
+            'item_id' => $data->id
+        ];
+
+        Notification::send($user, new NewItem($details));
+
         return redirect()->route('home');
+
     }
 
     /**
@@ -78,7 +98,20 @@ class DataController extends Controller
     {
         $data->fill($request->all());
         $data->save();
-        return redirect()->route('data.show',[$data])->with('status', 'Item update Successfully'); 
+
+        $user = Auth::user();
+        $details = [
+            'greeting' => 'Hi '.Auth::user()->name,
+            'body' => 'Yout Item '.$data->title.' has been updated Successfully',
+            'thanks' => 'Thank you for using HQRentalApp!',
+            'actionText' => 'View Item',
+            'actionURL' => url('/data/'.$data->id),
+            'item_id' => $data->id
+        ];
+
+        Notification::send($user, new UpdatedItem($details));
+
+        return redirect()->route('data.show', compact('data')); 
     }
 
     /**
@@ -92,5 +125,76 @@ class DataController extends Controller
         $data->delete();
 
         return redirect()->route('home')->with('status', 'Item update Successfully');
+    }
+
+    /**
+     * method for send email notifications.
+     *
+     * @param  \App\Data  $data
+     * @return \Illuminate\Http\Response
+     */
+    public function sendNewItemNotification(Data $data)
+    {
+        $details = [
+            'greeting' => 'Hi '.Auth::user()->name,
+            'body' => 'This is a notification from HQRentalApp',
+            'thanks' => 'Thank you for using HQRentalApp!',
+            'actionText' => 'View My Site',
+            'actionURL' => url('/data/'.$data),
+            'order_id' => 101
+        ];
+
+        Notification::send($data, new NewItem($details));
+
+        return redirect()->route('data.show',[$data])->with('status', 'Item update Successfully'); 
+    }
+
+    /**
+     * method for send email notifications.
+     *
+     * @param  \App\Data  $data
+     * @return \Illuminate\Http\Response
+     */
+    public function sendUpdateItemNotification()
+    {
+        $user = Auth::user();
+        $details = [
+            'greeting' => 'Hi '.Auth::user()->name,
+            'body' => 'This is a notification from HQRentalApp',
+            'thanks' => 'Thank you for using HQRentalApp!',
+            'actionText' => 'View My Site',
+            'actionURL' => url('/'),
+            'item_id' => 101
+        ];
+
+        Notification::send($user, new NewItem($details));
+
+        // return redirect()->route('data.index',[$data->id])->with('status', 'Item update Successfully'); 
+        return redirect()->route('home');
+
+    }
+
+    /**
+     * method for email hourly notification schedule.
+     *
+     * @param  \App\Data  $data
+     * @return \Illuminate\Http\Response
+     */
+    public function hourlyReport()
+    {
+        $count = \DB::table('data')->where('created_at', '>=', \Carbon\Carbon::now()->subHour())->count();
+        $user = Auth::user();
+        $details = [
+            'greeting' => 'Hi '.Auth::user()->name,
+            'body' => 'in the last hour has been created '.$count.' Items Successfully',
+            'thanks' => 'Thank you for using HQRentalApp!',
+            'actionText' => 'View Items',
+            'actionURL' => url('/data')
+        ];
+        Notification::send($user, new HourlyReport($details));
+
+        // return redirect()->route('data.index',[$data->id])->with('status', 'Item update Successfully'); 
+        return redirect()->route('home');
+
     }
 }

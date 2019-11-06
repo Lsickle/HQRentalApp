@@ -11,14 +11,15 @@ class UpdatedItem extends Notification
 {
     use Queueable;
 
+    private $details;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($details)
     {
-        //
+        $this->details = $details;
     }
 
     /**
@@ -40,7 +41,12 @@ class UpdatedItem extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown('mail.data.update');
+        // return (new MailMessage)->markdown('mail.data.update');
+        return (new MailMessage)
+            ->greeting($this->details['greeting'])
+            ->line($this->details['body'])
+            ->action($this->details['actionText'], $this->details['actionURL'])
+            ->line($this->details['thanks']);
     }
 
     /**

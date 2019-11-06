@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewItem extends Notification
+class HourlyReport extends Notification
 {
     use Queueable;
 
@@ -41,7 +41,6 @@ class NewItem extends Notification
      */
     public function toMail($notifiable)
     {
-        // return (new MailMessage)->markdown('mail.data.new');
         return (new MailMessage)
             ->greeting($this->details['greeting'])
             ->line($this->details['body'])

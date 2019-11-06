@@ -16,5 +16,11 @@ class UsersTableSeeder extends Seeder
             'email' => 'recruitment@hqrentalsoftware.com',
             'password' => bcrypt('1234'),
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'Luis De la hoz',
+            'email' => 'luisdelahoz0@gmail.com',
+            'password' => bcrypt('1234'),
+        ]);
     }
 }
