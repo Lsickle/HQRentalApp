@@ -10,6 +10,4 @@ class Data extends Model
 
 	protected $fillable = ['title', 'description'];
 	
-	protected $primaryKey = 'ID_Cli';
-	
 }

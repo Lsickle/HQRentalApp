@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Data;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreDataRequest;
 
 class DataController extends Controller
 {
@@ -34,9 +35,14 @@ class DataController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDataRequest $request)
     {
-        //
+        $data = new Data();
+        $data->title = $request->input('title');
+        $data->description = $request->input('description');
+        $data->save();
+
+        return redirect()->route('home');
     }
 
     /**
@@ -47,7 +53,7 @@ class DataController extends Controller
      */
     public function show(Data $data)
     {
-        //
+        return view('Data.show', compact('data'));
     }
 
     /**
@@ -58,7 +64,7 @@ class DataController extends Controller
      */
     public function edit(Data $data)
     {
-        //
+        return view('Data.edit', compact('data'));
     }
 
     /**
@@ -68,9 +74,11 @@ class DataController extends Controller
      * @param  \App\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Data $data)
+    public function update(StoreDataRequest $request, Data $data)
     {
-        //
+        $data->fill($request->all());
+        $data->save();
+        return redirect()->route('data.show',[$data])->with('status', 'Item update Successfully'); 
     }
 
     /**
@@ -81,6 +89,8 @@ class DataController extends Controller
      */
     public function destroy(Data $data)
     {
-        //
+        $data->delete();
+
+        return redirect()->route('home')->with('status', 'Item update Successfully');
     }
 }

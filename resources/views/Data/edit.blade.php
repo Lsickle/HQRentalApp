@@ -5,8 +5,8 @@
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="card">
-                    <div class="card-header bg-secondary">
-                        <h3 class="card-title text-white">item #{{$data->id}} Edit</h3>
+                    <div class="card-header bg-warning">
+                        <h3 class="card-title">item #{{$data->id}} Edit</h3>
                     </div>
                     <form class="needs-validation" novalidate role="form" action="/data/{{$data->id}}" method="POST" enctype="multipart/form-data">
                         @method('PUT')
@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="input-description"><h5>Description</h5></label>
-                                <textarea style="resize: vertical;" maxlength="65535" name="description" id="input-description" class="form-control" rows ="10" value="{{$data->description}}"></textarea>
+                                <textarea style="resize: vertical;" maxlength="65535" name="description" id="input-description" class="form-control" rows ="10">{{$data->description}}</textarea>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
