@@ -14,7 +14,8 @@ class DataController extends Controller
      */
     public function index()
     {
-        //
+        $data = Data::all();
+        return view('home', compact('data'));
     }
 
     /**
@@ -24,7 +25,7 @@ class DataController extends Controller
      */
     public function create()
     {
-        //
+        return view('Data.create');
     }
 
     /**
