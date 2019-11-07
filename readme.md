@@ -7,7 +7,7 @@
 
 -----------------------------------------------------------------------------------
 
-# Setup HQRentalApp project from Github
+## Setup HQRentalApp project from Github
 
 
 Open Terminal
@@ -60,6 +60,28 @@ Password: 1234
 ```
 
 
+## Starting the Laravel Scheduler
+
+Let’s setup the Cron Jobs to run automatically without initiating manually by running the command. 
+```bash
+php artisan command:SendReport 2 --queue==default
+```
+
+To start the Laravel Scheduler itself, we only need to add one Cron job which executes every minute. Go to your terminal, ssh into your server, cd into your project and run this command.
+
+
+```bash
+crontab -e
+```
+
+
+This will open the server Crontab file, paste the code below into the file, save and then exit.
+
+```bash
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Do not forget to replace /path/to/artisan with the full path to the Artisan command of your Laravel Application.
 -----------------------------------------------------------------------------------
 
 ## SETUP CUSTOM BRANCH IN REMOTE REPOSITORY (optional for development environment)
