@@ -100,6 +100,7 @@ This will open the server Crontab file, paste the code below into the file, save
 ```
 
 Do not forget to replace /path/to/artisan with the full path to the Artisan command of your Laravel Application.
+
 -----------------------------------------------------------------------------------
 
 ## SETUP CUSTOM BRANCH IN REMOTE REPOSITORY (optional for development environment)
