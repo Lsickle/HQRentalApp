@@ -82,7 +82,7 @@ Password: 1234
 
 Let’s setup the Cron Jobs to run automatically without initiating manually by running the command. 
 ```bash
-php artisan command:SendReport 2 --queue==default
+php artisan command:SendReport 1 --queue==default
 ```
 
 To start the Laravel Scheduler itself, we only need to add one Cron job which executes every minute. Go to your terminal, ssh into your server, cd into your project and run this command.
