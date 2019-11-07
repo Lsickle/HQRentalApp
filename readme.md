@@ -28,19 +28,24 @@ cp .env.example .env
 ```
 
 Change the following fields in the .env file: (change database connection properly) 
+```bash
 ``DB_CONNECTION=mysql``
 ``DB_HOST=127.0.0.1``
 ``DB_PORT=3306``
 ``DB_DATABASE=dbname``
 ``DB_USERNAME=dbuser``
 ``DB_PASSWORD=dbpassword``
+```
 (optional)
+```bash
 ``MAIL_DRIVER=smtp``
 ``MAIL_HOST=smtp.mailtrap.io``
 ``MAIL_PORT=2525``
 ``MAIL_USERNAME=6a878fba8be67d``
 ``MAIL_PASSWORD=80fc318bd5a90c``
 ``MAIL_ENCRYPTION=null``
+```
+
 
 
 From terminal run:
